@@ -43,6 +43,16 @@
     color: white;
   }
 
+  button {
+    border: 0;
+    border-radius: 10px;
+  }
+
+  button:active {
+    background-color: #6b6969;
+    transform: translateY(2px);
+  }
+
   .marble {
     text-align: center;
     cursor: pointer;
@@ -139,10 +149,18 @@
     height: 50px;
   }
 
+  .marble-switch {
+    font-size: 30px;
+  }
+
+  .marble-switch:active {
+    transform: translateY(5px);
+  }
+
 </style>
 
 <div class="row">
-  <label class="title">RxJS marbles examples</label>
+  <div class="title">RxJS marbles examples</div>
 
   <div>
     <div class="marble-intro-group">
@@ -156,7 +174,7 @@
 
 
 <div class="section">
-  <label>Tracking clicks</label>
+  <div>Tracking clicks</div>
   <div class="row">
     <div class="marble marble-click">🔵</div>
     <div class="marble marble-click">🔴</div>
@@ -168,18 +186,18 @@
   </div>
   <div class="row">
     <div>
-      <label for="redCount">Red:</label>
+      <div for="redCount">Red:</div>
       <span id="redCount">0</span>
     </div>
     <div>
-      <label for="blueCount">Blue:</label>
+      <div for="blueCount">Blue:</div>
       <span id="blueCount">0</span>
     </div>
   </div>
 </div>
 
 <div class="section">
-  <label>Throttling</label>
+  <div>Throttling</div>
   <div class="row">
     <input type="text" id="marbleTextInput" placeholder="Convert text to marble">
   </div>
@@ -190,7 +208,10 @@
 </div>
 
 <div class="section">
-  <label>Throttling</label>
-  
-
+  <div>Switching streams</div>
+  <div class="row">
+    <div class="marble marble-switch">🤓</div>
+    <div class="marble marble-switch">😗</div>
+    <div class="marble marble-switch">🥶</div>
+  </div>
 </div>

@@ -1,5 +1,5 @@
-import { of, interval, fromEvent } from 'rxjs'; 
-import { map, tap, take, debounceTime, startWith } from 'rxjs/operators';
+import { of, interval, fromEvent, merge, forkJoin } from 'rxjs'; 
+import { map, tap, take, debounceTime, startWith, takeLast, switchMap } from 'rxjs/operators';
 
 /**
  * https://rxmarbles.com
@@ -122,12 +122,33 @@ function rxjsExampleMarbleThrottle() {
 
 }
 
-// last
+function rxjsExampleMarbleSwitch() {
+    const observable = fromEvent(document.getElementsByClassName('marble-switch'), 'click');
+
+    const timeObservable = interval(1000);
+
+    observable.pipe(
+      map(event => event.target as HTMLDivElement),
+      map(element => element.innerHTML),
+      tap(marble => console.log(`switching to ${marble}...`)),
+      switchMap(() => timeObservable, (marble, time) =>`${marble} ${time}`),
+      tap(console.log)
+    ).subscribe();
+}
+
+function rxjsExampleMarbleGame() {
+
+}
+
 // combine latest
+// game is, I show an emoji, and you click on it!
+// will use last
+// see your score
 
 console.clear();
 // rxjsSimpleExample();
 // rxjsSimpleExample2();
 // rxjsSimpleExample3();
-rxjsExampleMarbleIntro();
-rxjsExampleMarbleThrottle();
+// rxjsExampleMarbleIntro();
+// rxjsExampleMarbleThrottle();
+rxjsExampleMarbleSwitch();
