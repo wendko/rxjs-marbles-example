@@ -1,5 +1,5 @@
-import { of, interval, fromEvent, merge, forkJoin } from 'rxjs'; 
-import { map, tap, take, debounceTime, startWith, takeLast, switchMap } from 'rxjs/operators';
+import { of, interval, fromEvent, merge, forkJoin, EMPTY } from 'rxjs'; 
+import { combineLatest, map, tap, take, debounceTime, startWith, takeLast, switchMap, filter, find, mergeMap} from 'rxjs/operators';
 
 /**
  * https://rxmarbles.com
@@ -137,13 +137,73 @@ function rxjsExampleMarbleSwitch() {
 }
 
 function rxjsExampleMarbleGame() {
+  const gameTimerElement = document.getElementById("gameTimer");
+  const gameButtonElement = document.getElementById("btnGame");
+  const gameTargetElement = document.getElementById("gameTarget");
+  const scoreElement = document.getElementById("gameScore");
 
+  const gameButtonClicked$ = fromEvent(document.getElementById("btnGame"), "click")
+  .pipe(
+    map(e => (e.target as HTMLButtonElement)),
+    map(el => el.innerText)
+  );
+
+  const gameStarted$ = gameButtonClicked$
+  .pipe(
+    switchMap(x => {
+      if (x === 'Play') {
+        gameTimerElement.style.animationPlayState = "running";
+        gameButtonElement.innerText = "End";
+
+        const gameTimer$ = interval(1500);
+
+        const currentTarget$ = gameTimer$
+        .pipe(
+          map(_ => {
+            const marbles = ['🤓','😗','🥶','🥺','🥵','🥰','🧐','😱','🤑','🤡'];
+            const targetIndex = Math.floor(Math.random() * Math.floor(marbles.length - 1));
+            return marbles[targetIndex];
+          }),
+          tap(currentTarget => gameTargetElement.innerText = currentTarget)
+        );
+
+        const clickedMarble$ = fromEvent(document.getElementsByClassName('marble-game'), 'click')
+        .pipe(
+          map(e => (e.target as HTMLDivElement).innerText)
+        );
+
+        const scoreKeeper$ = clickedMarble$
+        .pipe(
+          filter(x => x === gameTargetElement.innerText),
+          tap(addScore => {
+            scoreElement.innerText = `${+scoreElement.innerText + 1}`
+          })
+        )
+
+        return merge(currentTarget$, scoreKeeper$);
+      } else {
+        gameTimerElement.style.animationPlayState = "paused";
+        gameButtonElement.innerText = "Play";
+        return EMPTY;
+      }
+    })
+  );
+
+  merge(gameStarted$).subscribe();
 }
 
-// combine latest
-// game is, I show an emoji, and you click on it!
-// will use last
-// see your score
+export function startGame() {
+  document.getElementById("gameTimer").style.animationPlayState = "running";
+
+  const gameTimer$ = interval(2000)
+  .pipe(
+    startWith(-1),
+    map(x => x+=2),
+    tap(console.log)
+  );
+
+  gameTimer$.subscribe();
+}
 
 console.clear();
 // rxjsSimpleExample();
@@ -151,4 +211,5 @@ console.clear();
 // rxjsSimpleExample3();
 // rxjsExampleMarbleIntro();
 // rxjsExampleMarbleThrottle();
-rxjsExampleMarbleSwitch();
+// rxjsExampleMarbleSwitch();
+rxjsExampleMarbleGame();

@@ -157,9 +157,40 @@
     transform: translateY(5px);
   }
 
+  .marble-game {
+    font-size: 20px;
+  }
+
+  #gameTarget {
+    font-size: 35px;
+    background-color: #6d6d6d;
+    border-radius: 10px;
+    width: fit-content;
+    margin: auto;
+    padding: 5px 10px 8px;
+  }
+
+  @keyframes countdown {
+    from { width: 90% }
+    to {width: 0%}
+  }
+
+  #gameTimer {
+    background: pink;
+    border-radius: 10px;
+    padding: 3px 0px;
+    margin: 10px 5%;
+    animation: 1.5s countdown infinite;
+    animation-play-state: paused;
+  }
+
+  #gameTarget {
+    margin-top: 10px;
+  }
+
 </style>
 
-<div class="row">
+<!-- <div class="row">
   <div class="title">RxJS marbles examples</div>
 
   <div>
@@ -213,5 +244,28 @@
     <div class="marble marble-switch">🤓</div>
     <div class="marble marble-switch">😗</div>
     <div class="marble marble-switch">🥶</div>
+  </div>
+</div> -->
+
+<div class="section">
+  <label for="gameScore">Score: </label>
+  <span id="gameScore">0</span>
+  <div id="gameTarget">🤓</div>
+  <div id="gameTimer"></div>
+  <button id="btnGame">Play</button>
+  <div>
+    ⬇ Click the correct emoji ⬇
+  </div>
+  <div class="row">
+    <div class="marble marble-game">🤓</div>
+    <div class="marble marble-game">😗</div>
+    <div class="marble marble-game">🥶</div>
+    <div class="marble marble-game">🥺</div>
+    <div class="marble marble-game">🥵</div>
+    <div class="marble marble-game">🥰</div>
+    <div class="marble marble-game">🧐</div>
+    <div class="marble marble-game">😱</div>
+    <div class="marble marble-game">🤑</div>
+    <div class="marble marble-game">🤡</div>
   </div>
 </div>
