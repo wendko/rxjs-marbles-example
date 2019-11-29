@@ -17,6 +17,11 @@
     font-size: 20px;
   }
 
+  .marble-intro-group {
+    display: flex;
+    justify-content: center;
+  }
+
   .row {
     display: grid;
     grid-auto-flow: column;
@@ -44,31 +49,52 @@
     width: fit-content;
   }
 
+  @keyframes marbleDance {
+    to {transform: rotate(360deg)}
+  }
+
+  .marble-intro {
+    animation: 1.8s marbleDance infinite;
+    transform-origin: top right;
+    margin-top: 20px;
+    font-size: 10px;
+  }
+
+  .marble-intro:nth-child(2) {
+    animation-delay: 0.5s;
+    transform-origin: top left;
+  }
+
+  .juggler {
+    font-size: 30px;
+    margin-top: 0px;
+  }
+
   .marble:active {
     outline: 2px solid yellow;
   }
 
-  .marble-intro {
+  .marble-click {
     animation: marbley 2.1s infinite;
   }
 
-  .marble-intro:nth-child(2) {
+  .marble-click:nth-child(2) {
     animation-delay: 0.3s;
   }
   
-  .marble-intro:nth-child(3) {
+  .marble-click:nth-child(3) {
     animation-delay: calc(0.3s * 2);
   }
   
-  .marble-intro:nth-child(4) {
+  .marble-click:nth-child(4) {
     animation-delay: calc(0.3s * 3);
   }
   
-  .marble-intro:nth-child(5) {
+  .marble-click:nth-child(5) {
     animation-delay: calc(0.3s * 4);
   }
   
-  .marble-intro:nth-child(6) {
+  .marble-click:nth-child(6) {
     animation-delay: calc(0.3s * 5);
   }
   
@@ -115,36 +141,56 @@
 
 </style>
 
-<label class="title">RxJS marbles example</label>
+<div class="row">
+  <label class="title">RxJS marbles examples</label>
 
-<div class="row">
-  <div class="marble marble-intro">🔵</div>
-  <div class="marble marble-intro">🔴</div>
-  <div class="marble marble-intro">🔵</div>
-  <div class="marble marble-intro">🔴</div>
-  <div class="marble marble-intro">🔵</div>
-  <div class="marble marble-intro">🔴</div>
-  <div class="marble marble-intro">🔵</div>
-</div>
-<div class="row">
   <div>
-    <label for="redCount">Red:</label>
-    <span id="redCount">0</span>
-  </div>
-  <div>
-    <label for="blueCount">Blue:</label>
-    <span id="blueCount">0</span>
+    <div class="marble-intro-group">
+      <div class="marble marble-intro">🔵</div>
+      <div class="marble marble-intro">🔴</div>
+    </div>
+
+    <div class="juggler">🤹‍♀️</div>
   </div>
 </div>
 
 
 <div class="section">
+  <label>Tracking clicks</label>
+  <div class="row">
+    <div class="marble marble-click">🔵</div>
+    <div class="marble marble-click">🔴</div>
+    <div class="marble marble-click">🔵</div>
+    <div class="marble marble-click">🔴</div>
+    <div class="marble marble-click">🔵</div>
+    <div class="marble marble-click">🔴</div>
+    <div class="marble marble-click">🔵</div>
+  </div>
+  <div class="row">
+    <div>
+      <label for="redCount">Red:</label>
+      <span id="redCount">0</span>
+    </div>
+    <div>
+      <label for="blueCount">Blue:</label>
+      <span id="blueCount">0</span>
+    </div>
+  </div>
+</div>
+
+<div class="section">
   <label>Throttling</label>
   <div class="row">
-    <input type="text" id="marbleTextInput" placeholder="Put your marble text here">
+    <input type="text" id="marbleTextInput" placeholder="Convert text to marble">
   </div>
   <div class="row">
     <div id="marbleTextOutput">
     </div>
   </div>
+</div>
+
+<div class="section">
+  <label>Throttling</label>
+  
+
 </div>

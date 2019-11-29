@@ -90,7 +90,7 @@ function rxjsExampleMarbleIntro() {
   /* make the observable user action based instead of time-based
   * Update the number
   */
-  const observable = fromEvent(document.getElementsByClassName('marble-intro'), 'click');
+  const observable = fromEvent(document.getElementsByClassName('marble-click'), 'click');
 
   observable.pipe(
     map(event => event.target as HTMLDivElement),
@@ -100,7 +100,6 @@ function rxjsExampleMarbleIntro() {
       countElement.innerText = `${+countElement.innerText + 1}`;
     })
   ).subscribe();
-
 }
 
 function rxjsExampleMarbleThrottle() {
@@ -123,11 +122,12 @@ function rxjsExampleMarbleThrottle() {
 
 }
 
+// last
 // combine latest
 
 console.clear();
 // rxjsSimpleExample();
 // rxjsSimpleExample2();
 // rxjsSimpleExample3();
-// rxjsExampleMarbleIntro();
+rxjsExampleMarbleIntro();
 rxjsExampleMarbleThrottle();
