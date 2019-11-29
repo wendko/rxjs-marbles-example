@@ -31,7 +31,7 @@
   }
 
   .section {
-    margin-top: 70px;
+    margin: 150px 0px;
   }
 
   input {
@@ -161,6 +161,12 @@
     font-size: 20px;
   }
 
+  .marble-game-group {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(5, 1fr);
+  }
+
   #gameTarget {
     font-size: 35px;
     background-color: #6d6d6d;
@@ -190,7 +196,7 @@
 
 </style>
 
-<!-- <div class="row">
+<div class="row">
   <div class="title">RxJS marbles examples</div>
 
   <div>
@@ -245,7 +251,7 @@
     <div class="marble marble-switch">😗</div>
     <div class="marble marble-switch">🥶</div>
   </div>
-</div> -->
+</div>
 
 <div class="section">
   <label for="gameScore">Score: </label>
@@ -256,7 +262,7 @@
   <div>
     ⬇ Click the correct emoji ⬇
   </div>
-  <div class="row">
+  <div class="marble-game-group">
     <div class="marble marble-game">🤓</div>
     <div class="marble marble-game">😗</div>
     <div class="marble marble-game">🥶</div>
