@@ -4,6 +4,7 @@
     font-family: Helvetica;
     color: white;
     text-align: center;
+    letter-spacing: 2px;
   }
 
   @keyframes marbley {
@@ -12,53 +13,138 @@
     }
   }
 
-  .marbles {
+  .title {
+    font-size: 20px;
+  }
+
+  .row {
     display: grid;
     grid-auto-flow: column;
     grid-gap: 10px;
-    justify-content: center;
+    place-items: center;
+    margin-top: 10px;
   }
 
-  .marbles > div {
+  .section {
+    margin-top: 70px;
+  }
+
+  input {
+    border: 0 !important;
+    width: fit-content !important;
+    padding: 5px 10px;
+    font-size: 15px;
+    background-color: #080808;
+    color: white;
+  }
+
+  .marble {
+    text-align: center;
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .marble:active {
+    outline: 2px solid yellow;
+  }
+
+  .marble-intro {
     animation: marbley 2.1s infinite;
   }
 
-  .marbles > div:nth-child(2) {
+  .marble-intro:nth-child(2) {
     animation-delay: 0.3s;
   }
   
-  .marbles > div:nth-child(3) {
+  .marble-intro:nth-child(3) {
     animation-delay: calc(0.3s * 2);
   }
   
-  .marbles > div:nth-child(4) {
+  .marble-intro:nth-child(4) {
     animation-delay: calc(0.3s * 3);
   }
   
-  .marbles > div:nth-child(5) {
+  .marble-intro:nth-child(5) {
     animation-delay: calc(0.3s * 4);
   }
   
-  .marbles > div:nth-child(6) {
+  .marble-intro:nth-child(6) {
     animation-delay: calc(0.3s * 5);
   }
   
-  .marbles > div:nth-child(7) {
+  .marble-intro:nth-child(7) {
     animation-delay: calc(0.3s * 6);
+  }
+
+  .marble-throttle {
+    font-size: 70px;
+  }
+
+  .marble-letter {
+    background-color: pink;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid black;
+    margin: 0px 1px;
+    font-size: 12px;
+    font-weight: bolder;
+    color: #080808;
+    display: inline-grid;
+    align-items: center;
+    animation: marbley 3s infinite;
+  }
+
+  .marble-letter:nth-child(n) {
+    background-color: #784bc7;
+  }
+
+  .marble-letter:nth-child(2n) {
+    background-color: #49a098;
+    animation-delay: 1s;
+  }
+
+  .marble-letter:nth-child(3n) {
+    background-color: #3f51b3;
+    animation-delay: 2s;
+  }
+
+  #marbleTextOutput {
+    height: 50px;
   }
 
 </style>
 
-<h1>RxJS marbles</h1>
+<label class="title">RxJS marbles example</label>
 
-<div class="marbles">
-  <div>🔵</div>
-  <div>🔴</div>
-  <div>🔵</div>
-  <div>🔴</div>
-  <div>🔵</div>
-  <div>🔴</div>
-  <div>🔵</div>
+<div class="row">
+  <div class="marble marble-intro">🔵</div>
+  <div class="marble marble-intro">🔴</div>
+  <div class="marble marble-intro">🔵</div>
+  <div class="marble marble-intro">🔴</div>
+  <div class="marble marble-intro">🔵</div>
+  <div class="marble marble-intro">🔴</div>
+  <div class="marble marble-intro">🔵</div>
+</div>
+<div class="row">
+  <div>
+    <label for="redCount">Red:</label>
+    <span id="redCount">0</span>
+  </div>
+  <div>
+    <label for="blueCount">Blue:</label>
+    <span id="blueCount">0</span>
+  </div>
 </div>
 
-<p> 🔽 Check out console! 🔽 </p>
+
+<div class="section">
+  <label>Throttling</label>
+  <div class="row">
+    <input type="text" id="marbleTextInput" placeholder="Put your marble text here">
+  </div>
+  <div class="row">
+    <div id="marbleTextOutput">
+    </div>
+  </div>
+</div>
