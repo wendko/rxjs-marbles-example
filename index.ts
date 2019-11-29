@@ -1,5 +1,5 @@
 import { of, interval, fromEvent, merge, forkJoin, EMPTY } from 'rxjs'; 
-import { combineLatest, map, tap, take, debounceTime, startWith, takeLast, switchMap, filter, find, mergeMap} from 'rxjs/operators';
+import { combineLatest, map, tap, take, debounceTime, startWith, takeLast, switchMap,concatMap, filter, find, mergeMap} from 'rxjs/operators';
 
 function rxjsSimpleExample() {
   
@@ -9,32 +9,22 @@ function rxjsSimpleExample() {
 
   /**
    * Create an observable that tracks every second
+   * https://rxmarbles.com/#interval
    */
-  const observable = interval(1000);
 
  /**
    * The observer should return a marble 🔵 every second
    */
-  const observer = observable
-  .pipe(
-    tap(() => console.log('🔵'))
-  )
-  .subscribe();
 
   /**
    * The observer should stop subscribing after 5 seconds
    */
-  setTimeout(() => observer.unsubscribe(), 5000);
 }
-
-// rxjsSimpleExample();
 
 function rxjsSimpleExample2(){
   /**
    * Observer outputs different stuff depending on the value observed
    */
-
-// https://rxmarbles.com/#interval
   const observable = interval(1000);
 
   const observer = observable
@@ -43,20 +33,10 @@ function rxjsSimpleExample2(){
      * Output a blue 🔵 marble if it's an odd second
      * A red 🔴 marble if it's an even second
      */
-    tap(val => {
-      if (val % 2 === 0) {
-        console.log('🔵');
-      } else {
-        console.log('🔴');
-
-      }
-    })
   ).subscribe();
 
-  setTimeout(x => observer.unsubscribe(), 5000);
+  setTimeout(()=> observer.unsubscribe(), 5000);
 }
-
-// rxjsSimpleExample2();
 
 function rxjsSimpleExample3(){
   /**
@@ -71,12 +51,9 @@ function rxjsSimpleExample3(){
      * Same output as example 2
      * Except this time no explicit unsubscribe
      */
-    take(5),
     tap(() => console.log('🔵'))
   ).subscribe();
 }
-
-// rxjsSimpleExample3();
 
 function rxjsExampleMarbleClicked() {
   /* Observer to observe user action instead of interval
@@ -84,9 +61,10 @@ function rxjsExampleMarbleClicked() {
   * hint: fromEvent
   * https://rxmarbles.com/#map
   */
-  const observable = fromEvent(document.getElementsByClassName('marble-click'), 'click');
+  const observable = EMPTY;
 
   observable.pipe(
+    // tap(console.log),
     map(event => (event.target as HTMLDivElement).innerText),
     tap(marble => {
       const countElement = document.getElementById(marble === '🔴' ? 'redCount' : 'blueCount');
@@ -104,7 +82,6 @@ function rxjsExampleMarbleThrottle() {
   const observable = fromEvent(document.getElementById('marbleTextInput'), 'input');
 
   observable.pipe(
-    debounceTime(500),
     map(event => (event.target as HTMLInputElement).value),
     tap((marbleText: string) => {
       const outputElement = document.getElementById('marbleTextOutput');
@@ -126,12 +103,25 @@ function rxjsExampleMarbleSwitch() {
 
     const observable = fromEvent(document.getElementsByClassName('marble-switch'), 'click');
 
-    const timeObservable = interval(1000);
+    const timeObservable = interval(1000)
+    .pipe(
+      take(3),
+      map(val =>{
+        if(val === 0) {
+          return '🌿🥕🍠';
+        } else if (val === 1) {
+          return '🍳';
+        } else {
+          return '🍴';
+        }
+      })
+    );
 
     observable.pipe(
       map(event => event.target as HTMLDivElement),
       map(element => element.innerHTML),
-      switchMap(() => timeObservable, (marble, time) =>`${marble} ${time}`),
+      // switchMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
+      // concatMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
       tap(console.log)
     ).subscribe();
 }
@@ -190,6 +180,21 @@ function rxjsExampleMarbleGame() {
 
   gameManager$.subscribe();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 console.clear();
 rxjsExampleMarbleClicked();
