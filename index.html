@@ -112,7 +112,7 @@
     animation-delay: calc(0.3s * 6);
   }
 
-  .marble-throttle {
+  .marble-debounce {
     font-size: 70px;
   }
 
@@ -234,22 +234,26 @@
 </div>
 
 <div class="section">
-  <div>Throttling</div>
+  <div>Switching streams</div>
+  <div class="row">
+    <div class="marble marble-switch">🎹</div>
+    <div class="marble marble-switch">🎸</div>
+    <div class="marble marble-switch">🎷</div>
+  </div>
+  <div class="row">
+    <div id="currentlyPlayingMusic"></div>
+  </div>
+</div>
+
+
+<div class="section">
+  <div>Get marbley text</div>
   <div class="row">
     <input type="text" id="marbleTextInput" placeholder="Convert text to marble">
   </div>
   <div class="row">
     <div id="marbleTextOutput">
     </div>
-  </div>
-</div>
-
-<div class="section">
-  <div>Switching streams</div>
-  <div class="row">
-    <div class="marble marble-switch">🎹</div>
-    <div class="marble marble-switch">🎸</div>
-    <div class="marble marble-switch">🎷</div>
   </div>
 </div>
 

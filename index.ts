@@ -1,16 +1,9 @@
 import { of, interval, fromEvent, merge, forkJoin, EMPTY } from 'rxjs'; 
-import { combineLatest, map, tap, take, debounceTime, startWith, takeLast, switchMap,concatMap, filter, find, mergeMap} from 'rxjs/operators';
+import { combineLatest, map, tap, take, debounceTime, startWith, takeLast, switchMap,concatMap, filter, find, mergeMap, scan} from 'rxjs/operators';
 
 function rxjsSimpleExample() {
-  
   /**
-   * Observer that unsubscribes after a while
-   */
-
-
-  /**
-   * Create an observable that tracks every second
-   * https://rxmarbles.com/#interval
+   * Create an observable that outputs a value every second
    */
 
 
@@ -44,12 +37,10 @@ function rxjsSimpleExample() {
 
 
 
-  const observer = observable
+  const observer$ = observable
   .pipe(
 
-
     tap( val => console.log(val, '🔵'))
-
 
   );
 
@@ -60,7 +51,7 @@ function rxjsSimpleExample() {
 
 
 
-  const subscription = observer.subscribe();
+  const subscription = observer$.subscribe();
 
 
 
@@ -131,19 +122,13 @@ function rxjsExampleMarbleClicked() {
 
   observable.pipe(
 
-    /** click event */
-    // tap(console.log),
-
-
     /** div inner text */
-    // map(event => (event.target as HTMLDivElement).innerText),
-
-
+    map(event => (event.target as HTMLDivElement).innerText),
     /** update count */
-    // tap(marble => {
-    //   const countElement = document.getElementById(marble === '🔴' ? 'redCount' : 'blueCount');
-    //   countElement.innerText = `${+countElement.innerText + 1}`;
-    // })
+    tap(marble => {
+      const countElement = document.getElementById(marble === '🔴' ? 'redCount' : 'blueCount');
+      countElement.innerText = `${+countElement.innerText + 1}`;
+    })
 
 
   ).subscribe();
@@ -155,51 +140,6 @@ function rxjsExampleMarbleClicked() {
 
 
 
-
-
-
-
-
-
-
-function rxjsExampleMarbleThrottle() {
-  /**
-   * Throttle user input
-   */
-
-
-
-
-
-  const observable = fromEvent(document.getElementById('marbleTextInput'), 'input');
-
-
-
-
-
-
-
-  observable.pipe(
-
-    // debounceTime(500),
-
-    map(event => (event.target as HTMLInputElement).value),
-
-    tap((marbleText: string) => {
-      const outputElement = document.getElementById('marbleTextOutput');
-      outputElement.innerHTML = Array.from(marbleText).reduce(
-        (acc, letter) => 
-        acc += 
-        letter.trim() ? `<span class="marble-letter">${letter.toUpperCase()}</span>` : '&nbsp;'.repeat(2),
-        ''
-      );
-    }),
-
-    // debounceTime(500),
-
-  ).subscribe();
-
-}
 
 
 
@@ -248,31 +188,27 @@ function rxjsExampleMarbleSwitch() {
 
 
 
-      // switchMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
+      switchMap(() => timeObservable, (marble, time) => marble),
+
+
+
+
+
+      // concatMap(() => timeObservable, (marble, time) => marble),
 
 
 
 
 
 
+      tap(music => {
+        document.getElementById('currentlyPlayingMusic').innerText += music;
+      })
+    ).subscribe();
 
-
-
-
-      concatMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
-
-
-
-
-
-
-
-
-
-
-
-
-      tap(console.log)
+    fromEvent(document.getElementById('currentlyPlayingMusic'), 'click')
+    .pipe(
+      tap(() => document.getElementById('currentlyPlayingMusic').innerText = '')
     ).subscribe();
 }
 
@@ -285,7 +221,43 @@ function rxjsExampleMarbleSwitch() {
 
 
 
+function rxjsExampleMarbleDebounce() {
+  /**
+   * Debounce user input
+   */
 
+
+
+
+
+  const observable = fromEvent(document.getElementById('marbleTextInput'), 'input');
+
+
+
+
+
+
+
+  observable.pipe(
+
+    // debounceTime(500),
+
+
+    
+    map(event => (event.target as HTMLInputElement).value),
+
+    tap((marbleText: string) => {
+      const outputElement = document.getElementById('marbleTextOutput');
+      outputElement.innerHTML = Array.from(marbleText).reduce(
+        (acc, letter) => 
+        acc += 
+        letter.trim() ? `<span class="marble-letter">${letter.toUpperCase()}</span>` : '&nbsp;'.repeat(2),
+        ''
+      );
+    }),
+  ).subscribe();
+
+}
 
 
 
@@ -449,6 +421,6 @@ function rxjsExampleMarbleGame() {
 
 console.clear();
 rxjsExampleMarbleClicked();
-rxjsExampleMarbleThrottle();
+rxjsExampleMarbleDebounce();
 rxjsExampleMarbleSwitch();
 rxjsExampleMarbleGame();
