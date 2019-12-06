@@ -96,7 +96,7 @@ function rxjsSimpleExample() {
 
 }
 
-rxjsSimpleExample();
+// rxjsSimpleExample();
 
 
 
@@ -230,39 +230,113 @@ function rxjsExampleMarbleSwitch() {
 
     const timeObservable = interval(1000)
     .pipe(
-      take(3),
-      map(val =>{
-        if(val === 0) {
-          return '🌿🥕🍠';
-        } else if (val === 1) {
-          return '🍳';
-        } else {
-          return '🍴';
-        }
-      })
+      take(3)
     );
+
+
+
+
+
+
 
     observable.pipe(
       map(event => event.target as HTMLDivElement),
       map(element => element.innerHTML),
+
+
+
+
+
+
       // switchMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
-      // concatMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
+
+
+
+
+
+
+
+
+
+
+      concatMap(() => timeObservable, (marble, time) =>`${marble}: ${time}`),
+
+
+
+
+
+
+
+
+
+
+
+
       tap(console.log)
     ).subscribe();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const gameTimerElement = document.getElementById("gameTimer");
 const gameButtonElement = document.getElementById("btnGame");
 const gameTargetElement = document.getElementById("gameTarget");
 const scoreElement = document.getElementById("gameScore");
 
+
+
+
+
+
+
+
+
+
+
 function rxjsExampleMarbleGame() {
+
+
+
+
+
+
+
+
+
+
   const gameButtonClicked$ = fromEvent(document.getElementById("btnGame"), "click")
   .pipe(
     map(e => (e.target as HTMLButtonElement).innerText),
   );
 
+
+
+
+
+
+
+
   const gameTimer$ = interval(1500);
+
+
+
+
+
+
+
+
 
   const currentTarget$ = gameTimer$
     .pipe(
@@ -274,10 +348,37 @@ function rxjsExampleMarbleGame() {
       tap(currentTarget => gameTargetElement.innerText = currentTarget)
     );
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   const clickedMarble$ = fromEvent(document.getElementsByClassName('marble-game'), 'click')
     .pipe(
       map(e => (e.target as HTMLDivElement).innerText)
     );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const scoreKeeper$ = clickedMarble$
     .pipe(
@@ -286,7 +387,20 @@ function rxjsExampleMarbleGame() {
       tap(correctChoice => {
         scoreElement.innerText = `${+scoreElement.innerText + 1}`
       })
-    )
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   const gameManager$ = gameButtonClicked$
   .pipe(
@@ -302,6 +416,18 @@ function rxjsExampleMarbleGame() {
       }
     })
   );
+
+
+
+
+
+
+
+
+
+
+
+  
 
   gameManager$.subscribe();
 }
