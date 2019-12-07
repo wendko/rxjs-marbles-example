@@ -122,9 +122,16 @@ function rxjsExampleMarbleClicked() {
 
   observable.pipe(
 
-    /** div inner text */
     map(event => (event.target as HTMLDivElement).innerText),
-    /** update count */
+
+
+
+
+
+
+
+
+
     tap(marble => {
       const countElement = document.getElementById(marble === '🔴' ? 'redCount' : 'blueCount');
       countElement.innerText = `${+countElement.innerText + 1}`;
@@ -182,7 +189,6 @@ function rxjsExampleMarbleSwitch() {
     observable.pipe(
       map(event => event.target as HTMLDivElement),
       map(element => element.innerHTML),
-
 
 
 

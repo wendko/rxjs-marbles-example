@@ -7,6 +7,10 @@
     letter-spacing: 2px;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   @keyframes marbley {
     50% {
       transform: translateY(-5px);
@@ -57,6 +61,7 @@
     text-align: center;
     cursor: pointer;
     width: fit-content;
+    user-select: none;
   }
 
   @keyframes marbleDance {
@@ -209,8 +214,14 @@
   </div>
 </div>
 
+<div class="row">
+  <a href="#fromEvent">🔵</a>
+  <a href="#switchMap">🎹</a>
+  <a href="#debounceTime">⏰</a>
+  <a href="#game">👾</a>
+</div>
 
-<div class="section">
+<div class="section" id="fromEvent">
   <div>Tracking clicks</div>
   <div class="row">
     <div class="marble marble-click">🔵</div>
@@ -233,7 +244,7 @@
   </div>
 </div>
 
-<div class="section">
+<div class="section" id="switchMap">
   <div>Switching streams</div>
   <div class="row">
     <div class="marble marble-switch">🎹</div>
@@ -246,8 +257,8 @@
 </div>
 
 
-<div class="section">
-  <div>Get marbley text</div>
+<div class="section" id="debounceTime">
+  Get marbley text
   <div class="row">
     <input type="text" id="marbleTextInput" placeholder="Convert text to marble">
   </div>
@@ -257,7 +268,7 @@
   </div>
 </div>
 
-<div class="section">
+<div class="section" id="game">
   <label for="gameScore">Score: </label>
   <span id="gameScore">0</span>
   <div id="gameTarget">🤓</div>
