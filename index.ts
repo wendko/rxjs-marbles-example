@@ -194,13 +194,13 @@ function rxjsExampleMarbleSwitch() {
 
 
 
-      switchMap(() => timeObservable, (marble, time) => marble),
+      // switchMap(() => timeObservable, (marble, time) => marble),
 
 
 
 
 
-      // concatMap(() => timeObservable, (marble, time) => marble),
+      concatMap(() => timeObservable, (marble, time) => marble),
 
 
 
@@ -246,7 +246,7 @@ function rxjsExampleMarbleDebounce() {
 
   observable.pipe(
 
-    // debounceTime(500),
+    debounceTime(500),
 
 
     
